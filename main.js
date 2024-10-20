@@ -22,7 +22,7 @@ loader.load('https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/zwartkops_pit_
 });
 
 const modelLoader = new GLTFLoader();
-modelLoader.load( 'wooden_box.glb', function ( gltf ) {
+modelLoader.load( 'https://raw.githubusercontent.com/Mujeeb218353/ThreeJs-3D-Model/main/wooden_box.glb', function ( gltf ) {
   gltf.scene.position.set(0, -1, 0);
 	scene.add(gltf.scene);
 });
