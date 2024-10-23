@@ -10,21 +10,22 @@ camera.position.set(0, 0, 5);
 const canvas = document.getElementById('canvas');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 2.5;
-renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMappingExposure = 1.5;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 const loader = new RGBELoader();
 loader.load('https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/zwartkops_pit_1k.hdr', (environmentMap) => {
   environmentMap.mapping = THREE.EquirectangularReflectionMapping;
   scene.environment = environmentMap;
+  // scene.background = environmentMap;
 });
 
 const modelLoader = new GLTFLoader();
-modelLoader.load( 'https://raw.githubusercontent.com/Mujeeb218353/ThreeJs-3D-Model/main/wooden_box.glb', function ( gltf ) {
-  gltf.scene.position.set(0, -1, 0);
-	scene.add(gltf.scene);
+modelLoader.load('./wooden_box.glb', function (gltf) {
+  gltf.scene.scale.set(1, 1, 1);
+  scene.add(gltf.scene);
 });
 
 const controls = new OrbitControls(camera, canvas);
@@ -39,7 +40,7 @@ window.addEventListener('resize', () => {
 function animate() {
   requestAnimationFrame(animate);
   controls.update();
-  renderer.render(scene, camera)
+  renderer.render(scene, camera);
 }
 
 animate();
